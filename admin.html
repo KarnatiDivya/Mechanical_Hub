@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-header h1 {
+            color: #333;
+        }
+        
+        .admin-login,
+        .admin-controls,
+        .admin-list {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        
+        input,
+        button {
+            padding: 10px;
+            margin: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .error {
+            color: red;
+        }
+        
+        .admin-mechanic {
+            background: #e8e8e8;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-login">
+        <h2>Admin Login</h2>
+        <input type="text" id="adminUsername" placeholder="Username" />
+        <input type="password" id="adminPassword" placeholder="Password" />
+        <button onclick="adminLogin()">Login</button>
+        <p id="loginError" class="error"></p>
+    </div>
+
+    <script>
+        function adminLogin() {
+            const user = document.getElementById("adminUsername").value;
+            const pass = document.getElementById("adminPassword").value;
+            const error = document.getElementById("loginError");
+
+            if (user === "admin" && pass === "admin123") {
+                localStorage.setItem("adminLoggedIn", "true");
+                window.location.href = "admindashboard.html";
+            } else {
+                error.textContent = "Invalid credentials!";
+            }
+        }
+    </script>
+</body>
+
+</html>

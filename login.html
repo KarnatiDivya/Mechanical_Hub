@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background: #f4f4f4;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin: 15px auto;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .links {
+            margin-top: 20px;
+        }
+        
+        .links a {
+            display: block;
+            color: #007bff;
+            margin: 5px 0;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to MechEng Portal</h1>
+
+    <!-- 👤 User Login -->
+    <div class="section">
+        <h2>User Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Enter your name" required />
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- 🔗 Other options -->
+    <div class="section links">
+        <h2>Other Options</h2>
+        <a href="admin.html">🔐 Admin Login</a>
+        <a href="register.html">🛠️ Register as Mechanic</a>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+
+            if (username === "") {
+                alert("Please enter your name.");
+                return;
+            }
+
+            localStorage.setItem("loggedInUser", username);
+            alert("Login successful!");
+            window.location.href = "index.html"; // Redirect to user home/main page
+        });
+    </script>
+</body>
+
+</html>

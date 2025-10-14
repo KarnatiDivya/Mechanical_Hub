@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mechanic Directory</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+        /* Animate heading and paragraph from left and right */
+        
+        .home-content h1 {
+            text-align: left;
+            transform: translateX(-100%);
+            animation: slideInLeft 1s forwards;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .home-content p {
+            text-align: right;
+            transform: translateX(100%);
+            animation: slideInRight 1s forwards;
+            animation-delay: 0.5s;
+            font-size: 20px;
+        }
+        /* Animations */
+        
+        @keyframes slideInLeft {
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">MechEng</a>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#aboutus">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="./search.html">search</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <p id="userGreeting"></p>
+
+
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <div class="home-content">
+            <h1>Welcome to MechEng Hub</h1>
+            <p>Connecting you to reliable mechanics in your city.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="aboutus" class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-text fade-in">
+                <h2>About Us</h2>
+                <p>
+                    <strong>MechEng Hub</strong> is your go-to platform for connecting with experienced and trustworthy mechanics in your area.
+                </p>
+                <ul class="about-highlights">
+                    <li>✅ Verified local professionals</li>
+                    <li>📍 Location-based mechanic search</li>
+                    <li>⭐ Customer ratings and reviews</li>
+                    <li>🛠 Easy registration for mechanics</li>
+                </ul>
+                <a href="./services.html" class="about-btn">Explore Services</a>
+            </div>
+
+            <div class="about-image fade-in">
+                <img src="https://wallpapers.com/images/hd/two-car-mechanic-technician-rk0rdiryvybk5hca.jpg" alt="Mechanic at work">
+            </div>
+        </div>
+    </section>
+
+    <!-- //services section -->
+    <section class="services-section" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-container">
+
+            <!-- Car Service -->
+            <div class="service-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" alt="Car Service">
+                <h3>Car Service</h3>
+                <p><strong>Complete car maintenance and repair.</strong></p>
+                <ul>
+                    <li>🔧 Oil change</li>
+                    <li>🔧 Brake repair</li>
+                    <li>🔧 AC check</li>
+                    <li>🔧 Engine tuning</li>
+                </ul>
+                <p><strong>🕐 Time:</strong> 1–2 hours</p>
+                <p><strong>💰 Price:</strong> Starting from ₹800</p>
+                <button class="service-btn" onclick="window.location.href='book.html'">Book Now</button>
+            </div>
+
+            <!-- Bike Service -->
+            <div class="service-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2224/2224131.png" alt="Bike Service">
+                <h3>Bike Service</h3>
+                <p><strong>Two-wheeler service & quick fixes.</strong></p>
+                <ul>
+                    <li>🔧 Chain adjustment</li>
+                    <li>🔧 Oil change</li>
+                    <li>🔧 Brake service</li>
+                </ul>
+                <p><strong>🕐 Time:</strong> 30–60 minutes</p>
+                <p><strong>💰 Price:</strong> Starting from ₹300</p>
+                <button class="service-btn">Book Now</button>
+            </div>
+
+            <!-- Auto Service -->
+            <div class="service-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/236/236293.png" alt="Auto Service">
+                <h3>Auto Service</h3>
+                <p><strong>Repair and service for auto-rickshaws.</strong></p>
+                <ul>
+                    <li>🔧 Meter check</li>
+                    <li>🔧 Wheel alignment</li>
+                    <li>🔧 Engine service</li>
+                </ul>
+                <p><strong>🕐 Time:</strong> 1 hour</p>
+                <p><strong>💰 Price:</strong> Starting from ₹500</p>
+                <button class="service-btn">Book Now</button>
+            </div>
+
+            <!-- Bus Service -->
+            <div class="service-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2332/2332688.png" alt="Bus Service">
+                <h3>Bus Service</h3>
+                <p><strong>Heavy-duty service for buses.</strong></p>
+                <ul>
+                    <li>🔧 Brake testing</li>
+                    <li>🔧 Engine overhaul</li>
+                    <li>🔧 Suspension tuning</li>
+                </ul>
+                <p><strong>🕐 Time:</strong> 2–4 hours</p>
+                <p><strong>💰 Price:</strong> Starting from ₹1500</p>
+                <button class="service-btn">Book Now</button>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+    <script src="./script.js">
+    </script>
+</body>
+
+</html>

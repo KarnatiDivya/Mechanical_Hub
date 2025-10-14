@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Mechanic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            background: #fff;
+            padding: 25px;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Register as Mechanic</h1>
+
+    <form id="registerForm">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+        <input type="text" id="city" placeholder="City" required />
+        <input type="text" id="location" placeholder="Work Location" required />
+        <input type="text" id="speciality" placeholder="Speciality" required />
+        <input type="url" id="image" placeholder="Image URL" required />
+        <button type="submit">Send Request</button>
+    </form>
+
+    <div class="message" id="responseMessage"></div>
+
+    <button type="button" onclick="requestDelete()">Request to Delete Profile</button>
+
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const mechanic = {
+                id: Date.now(),
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                city: document.getElementById("city").value,
+                location: document.getElementById("location").value,
+                speciality: document.getElementById("speciality").value,
+                image: document.getElementById("image").value,
+                ratings: []
+            };
+
+            let pending = JSON.parse(localStorage.getItem("pendingMechanics")) || [];
+            pending.push(mechanic);
+            localStorage.setItem("pendingMechanics", JSON.stringify(pending));
+
+            document.getElementById("responseMessage").textContent = "Request sent to admin for approval!";
+            document.getElementById("registerForm").reset();
+        });
+
+        //delete
+
+        function requestDelete() {
+            const name = document.getElementById("name").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            if (!name || !phone) {
+                alert("Please enter your name and phone number to request deletion.");
+                return;
+            }
+
+            const deleteRequest = {
+                id: Date.now(),
+                name,
+                phone
+            };
+
+            let deleteRequests = JSON.parse(localStorage.getItem("deleteRequests")) || [];
+            deleteRequests.push(deleteRequest);
+            localStorage.setItem("deleteRequests", JSON.stringify(deleteRequests));
+
+            document.getElementById("responseMessage").textContent = "Request sent to admin to delete your profile.";
+
+            // ✅ Do not redirect
+            // ❌ window.location.href = "admindashboard.html";
+
+            // Optional: clear only name/phone fields
+            document.getElementById("name").value = '';
+            document.getElementById("phone").value = '';
+        }
+    </script>
+</body>
+
+</html>

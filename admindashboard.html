@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .btn-group {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+        }
+        
+        .view-btn {
+            background-color: #007bff;
+        }
+        
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        
+        .card {
+            background: #fff;
+            padding: 15px;
+            margin: 10px auto;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .card h3 {
+            margin-top: 10px;
+        }
+        
+        .approve-btn {
+            background: #28a745;
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .approve-btn:hover {
+            background: #218838;
+        }
+        
+        select,
+        option {
+            font-size: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <div class="btn-group">
+        <button class="view-btn" onclick="viewRequests()">View All Requests</button>
+        <button class="delete-btn" onclick="viewDeleteRequests()">View Delete Requests</button>
+
+        <button class="delete-btn" onclick="deleteMechanicView()">Delete Mechanic</button>
+    </div>
+
+    <div id="adminArea"></div>
+
+    <script>
+        function viewRequests() {
+            const container = document.getElementById("adminArea");
+            container.innerHTML = "<h2>Pending Mechanic Requests</h2>";
+
+            const pending = JSON.parse(localStorage.getItem("pendingMechanics")) || [];
+
+            if (pending.length === 0) {
+                container.innerHTML += "<p>No pending requests.</p>";
+                return;
+            }
+
+            pending.forEach(mech => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `
+          <img src="${mech.image}" alt="${mech.name}" />
+          <h3>${mech.name}</h3>
+          <p>City: ${mech.city}</p>
+          <p>Location: ${mech.location}</p>
+          <p>Speciality: ${mech.speciality}</p>
+          <p>Phone: ${mech.phone}</p>
+          <button class="approve-btn" onclick="approveMechanic(${mech.id})">Add Mechanic</button>
+        `;
+                container.appendChild(card);
+            });
+        }
+
+        function approveMechanic(id) {
+            let pending = JSON.parse(localStorage.getItem("pendingMechanics")) || [];
+            let approved = JSON.parse(localStorage.getItem("mechanics")) || [];
+
+            const mechanic = pending.find(m => m.id === id);
+            if (mechanic) {
+                approved.push(mechanic);
+                localStorage.setItem("mechanics", JSON.stringify(approved));
+                pending = pending.filter(m => m.id !== id);
+                localStorage.setItem("pendingMechanics", JSON.stringify(pending));
+                alert("Mechanic added to the website!");
+                viewRequests(); // refresh list
+            }
+        }
+
+        function deleteMechanicView() {
+            const container = document.getElementById("adminArea");
+            container.innerHTML = "<h2>Delete Mechanic</h2>";
+
+            const approved = JSON.parse(localStorage.getItem("mechanics")) || [];
+
+            if (approved.length === 0) {
+                container.innerHTML += "<p>No mechanics available.</p>";
+                return;
+            }
+
+            const select = document.createElement("select");
+            select.id = "deleteSelect";
+
+            approved.forEach(mech => {
+                const option = document.createElement("option");
+                option.value = mech.id;
+                option.textContent = `${mech.name} - ${mech.city}`;
+                select.appendChild(option);
+            });
+
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete Mechanic";
+            delBtn.className = "delete-btn";
+            delBtn.onclick = () => {
+                const id = Number(document.getElementById("deleteSelect").value);
+                let updated = approved.filter(m => m.id !== id);
+                localStorage.setItem("mechanics", JSON.stringify(updated));
+                alert("Mechanic deleted from the website.");
+                deleteMechanicView(); // refresh
+            };
+
+            container.appendChild(select);
+            container.appendChild(delBtn);
+        }
+
+        //delete
+
+        function viewDeleteRequests() {
+            const container = document.getElementById("adminArea");
+            container.innerHTML = "<h2>Pending Delete Requests</h2>";
+
+            const deleteRequests = JSON.parse(localStorage.getItem("deleteRequests")) || [];
+            const mechanics = JSON.parse(localStorage.getItem("mechanics")) || [];
+
+            if (deleteRequests.length === 0) {
+                container.innerHTML += "<p>No delete requests.</p>";
+                return;
+            }
+
+            deleteRequests.forEach(req => {
+                const matchingMechanic = mechanics.find(m => m.phone === req.phone && m.name === req.name);
+
+                if (matchingMechanic) {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                <h3>${matchingMechanic.name}</h3>
+                <p>Phone: ${matchingMechanic.phone}</p>
+                <p>City: ${matchingMechanic.city}</p>
+                <p>Location: ${matchingMechanic.location}</p>
+                <p>Speciality: ${matchingMechanic.speciality}</p>
+                <button class="delete-btn" onclick="approveDeleteRequest(${matchingMechanic.id}, ${req.id})">Approve Delete</button>
+            `;
+                    container.appendChild(card);
+                } else {
+                    // If not found in mechanics, just show the request info
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                <h3>${req.name}</h3>
+                <p>Phone: ${req.phone}</p>
+                <p style="color:red;">No matching mechanic found in approved list.</p>
+            `;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        //approve
+        function approveDeleteRequest(mechanicId, requestId) {
+            let mechanics = JSON.parse(localStorage.getItem("mechanics")) || [];
+            let deleteRequests = JSON.parse(localStorage.getItem("deleteRequests")) || [];
+
+            // Remove mechanic
+            mechanics = mechanics.filter(m => m.id !== mechanicId);
+            localStorage.setItem("mechanics", JSON.stringify(mechanics));
+
+            // Remove delete request
+            deleteRequests = deleteRequests.filter(r => r.id !== requestId);
+            localStorage.setItem("deleteRequests", JSON.stringify(deleteRequests));
+
+            alert("Mechanic profile has been deleted from the website.");
+            viewDeleteRequests(); // refresh
+        }
+    </script>
+</body>
+
+</html>

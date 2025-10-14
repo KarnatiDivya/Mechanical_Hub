@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mechanics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .mechanic-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .mechanic-card {
+            background: white;
+            padding: 15px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .mechanic-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Available Mechanics</h1>
+    <div class="mechanic-container" id="mechanicsContainer"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("mechanicsContainer");
+            const mechanics = JSON.parse(localStorage.getItem("mechanics")) || [];
+
+            if (mechanics.length === 0) {
+                container.innerHTML = "<p>No mechanics available yet.</p>";
+                return;
+            }
+
+            mechanics.forEach(m => {
+                const card = document.createElement("div");
+                card.className = "mechanic-card";
+                card.innerHTML = `
+          <img src="${m.image}" alt="${m.name}" />
+          <h3>${m.name}</h3>
+          <p>${m.speciality}</p>
+          <p>${m.city}, ${m.location}</p>
+          <p>📞 ${m.phone}</p>
+        `;
+                container.appendChild(card);
+            });
+        });
+    </script>
+</body>
+
+</html>
