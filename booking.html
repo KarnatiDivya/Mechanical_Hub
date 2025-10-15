@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vehicle Service Pre-Booking | MechEng Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f8fb;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px 40px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 30px;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .response-message {
+            text-align: center;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .response-message.success {
+            color: green;
+        }
+        
+        .response-message.error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h1>Vehicle Service Pre-Booking</h1>
+        <form id="bookingForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+            <label for="serviceType">Type of Service:</label>
+            <select id="serviceType" name="serviceType" required>
+                <option value="" disabled selected>Select service</option>
+                <option value="Car Service">Car Service</option>
+                <option value="Bike Service">Bike Service</option>
+                <option value="Auto Service">Auto Service</option>
+                <option value="Bus Service">Bus Service</option>
+            </select>
+
+            <label for="vehicleType">Type of Vehicle:</label>
+            <select id="vehicleType" name="vehicleType" required>
+                <option value="" disabled selected>Select vehicle type</option>
+                <option value="Car">Car</option>
+                <option value="Bike">Bike</option>
+                <option value="Auto Rickshaw">Auto Rickshaw</option>
+                <option value="Bus">Bus</option>
+            </select>
+
+            <label for="date">Preferred Date:</label>
+            <input type="date" id="date" name="date" required min="" />
+
+            <label for="time">Preferred Time:</label>
+            <input type="time" id="time" name="time" required />
+
+            <label for="location">Your Location:</label>
+            <textarea id="location" name="location" placeholder="Enter your address or location" rows="3" required></textarea>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="10-digit phone number" required pattern="[0-9]{10}" />
+
+            <label for="mechanic">Select Mechanic:</label>
+            <select id="mechanic" name="mechanic" required>
+                <option value="" disabled selected>Select mechanic</option>
+                <!-- Mechanic options loaded dynamically -->
+            </select>
+
+            <button type="submit">Book Service</button>
+
+            <p class="response-message" id="responseMessage"></p>
+        </form>
+    </div>
+
+    <script>
+        // Set minimum date for booking as today
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+
+        // Mechanics data based on service type (same as in your services.html)
+        const mechanicsByService = {
+            "Car Service": ["Rajesh Kumar", "Sneha Patel", "Vikram Singh"],
+            "Bike Service": ["Ravi Sharma", "Anita Desai"],
+            "Auto Service": ["Manoj Verma", "Sunita Rao"],
+            "Bus Service": ["Suresh Naik", "Kiran Joshi", "Amit Sharma"]
+        };
+
+        const serviceSelect = document.getElementById('serviceType');
+        const mechanicSelect = document.getElementById('mechanic');
+
+        // Load mechanics based on selected service
+        function loadMechanics() {
+            const selectedService = serviceSelect.value;
+            mechanicSelect.innerHTML = '<option value="" disabled selected>Select mechanic</option>';
+
+            if (selectedService && mechanicsByService[selectedService]) {
+                mechanicsByService[selectedService].forEach(mechanic => {
+                    const opt = document.createElement('option');
+                    opt.value = mechanic;
+                    opt.textContent = mechanic;
+                    mechanicSelect.appendChild(opt);
+                });
+            }
+        }
+
+        serviceSelect.addEventListener('change', loadMechanics);
+
+        // Handle form submit
+        const bookingForm = document.getElementById('bookingForm');
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simple validation is handled by required fields & pattern
+            const formData = new FormData(bookingForm);
+            const data = Object.fromEntries(formData.entries());
+
+            // Show confirmation message
+            const msgEl = document.getElementById('responseMessage');
+            msgEl.className = 'response-message success';
+            msgEl.textContent = `Thank you, ${data.name}! Your ${data.serviceType} for your ${data.vehicleType} is booked with mechanic ${data.mechanic} on ${data.date} at ${data.time}. We will contact you at ${data.phone}.`;
+
+            // Reset form and mechanic dropdown
+            bookingForm.reset();
+            mechanicSelect.innerHTML = '<option value="" disabled selected>Select mechanic</option>';
+            dateInput.min = today;
+        });
+    </script>
+</body>
+
+</html>

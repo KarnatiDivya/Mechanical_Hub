@@ -159,3 +159,50 @@ services.forEach(service => {
 
     container.appendChild(card);
 });
+
+
+//contact section
+// Contact Form Handler
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+    const response = document.getElementById("formResponse");
+
+    if (!name || !email || !message) {
+        response.textContent = "Please fill in all fields.";
+        response.style.color = "red";
+        return;
+    }
+
+    response.textContent = `Thank you, ${name}! We'll get back to you soon.`;
+    response.style.color = "green";
+
+    document.getElementById("contactForm").reset();
+});
+
+// Animate footer on scroll
+document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const footer = document.querySelector('.footer');
+
+    if (footer) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    footer.classList.add('fade-in-footer');
+                    observer.unobserve(footer);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        observer.observe(footer);
+    } else {
+        console.warn('Footer element not found.');
+    }
+});

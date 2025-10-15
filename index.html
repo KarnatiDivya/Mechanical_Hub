@@ -48,10 +48,9 @@
             <li><a href="#">Home</a></li>
             <li><a href="#aboutus">About Us</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="#">Projects</a></li>
+            <li><a href="./booking.html">Booking</a></li>
             <li><a href="./search.html">search</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
     <p id="userGreeting"></p>
@@ -106,7 +105,7 @@
                 </ul>
                 <p><strong>🕐 Time:</strong> 1–2 hours</p>
                 <p><strong>💰 Price:</strong> Starting from ₹800</p>
-                <button class="service-btn" onclick="window.location.href='book.html'">Book Now</button>
+                <button class="service-btn" onclick="window.location.href='./booking.html'">Book Now</button>
             </div>
 
             <!-- Bike Service -->
@@ -121,7 +120,7 @@
                 </ul>
                 <p><strong>🕐 Time:</strong> 30–60 minutes</p>
                 <p><strong>💰 Price:</strong> Starting from ₹300</p>
-                <button class="service-btn">Book Now</button>
+                <button class="service-btn" onclick="window.location.href='./booking.html'">Book Now</button>
             </div>
 
             <!-- Auto Service -->
@@ -136,7 +135,7 @@
                 </ul>
                 <p><strong>🕐 Time:</strong> 1 hour</p>
                 <p><strong>💰 Price:</strong> Starting from ₹500</p>
-                <button class="service-btn">Book Now</button>
+                <button class="service-btn" onclick="window.location.href='./booking.html'">Book Now</button>
             </div>
 
             <!-- Bus Service -->
@@ -151,11 +150,59 @@
                 </ul>
                 <p><strong>🕐 Time:</strong> 2–4 hours</p>
                 <p><strong>💰 Price:</strong> Starting from ₹1500</p>
-                <button class="service-btn">Book Now</button>
+                <button class="service-btn" onclick="window.location.href='./booking.html'">Book Now</button>
             </div>
 
         </div>
     </section>
+
+    <!-- Contact Section -->
+
+    <div class="contact-map">
+        <!-- Optional: Add a map iframe if needed -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.281927862539!2d144.96305781531694!3d-37.81410797975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577fdfdcfb29a35!2sMechanic%20Workshop!5e0!3m2!1sen!2sin!4v1614334371709!5m2!1sen!2sin"
+            width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+    </div>
+    </div>
+
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-container">
+            <!-- Left: Contact Details -->
+            <div class="contact-info fade-in-left">
+                <h3>Contact Information</h3>
+                <p><strong>📍 Address:</strong> 123 Mechanic Street, AutoCity, India</p>
+                <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+                <p><strong>📧 Email:</strong> admin@mechenghub.com</p>
+            </div>
+
+            <!-- Right: Contact Form -->
+            <div class="contact-form fade-in-right">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Your Name" required />
+                    <input type="email" id="email" placeholder="Your Email" required />
+                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                    <p id="formResponse"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer fade-in-footer">
+        <div class="footer-container">
+            <p>&copy; <span id="currentYear"></span> Karnati Divya. All rights reserved.</p>
+
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/divyakarnati3/" target="_blank" title="LinkedIn"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+                <a href="https://github.com/KarnatiDivya" target="_blank" title="GitHub"><img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub"></a>
+                <p><strong>📧 Email:</strong> <a href="mailto:divyareddykarnati9502@gmail.com">divyareddykarnati9502@gmail.com</a></p>
+
+            </div>
+        </div>
+    </footer>
 
 
 
